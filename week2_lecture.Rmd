@@ -1,6 +1,6 @@
 ---
 title: "week2"
-output: html_document
+output: github_document
 date: "2024-01-31"
 ---
 

@@ -2,36 +2,59 @@ week2
 ================
 2024-01-31
 
-- [R Markdown](#r-markdown)
-- [Including Plots](#including-plots)
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax
-for authoring HTML, PDF, and MS Word documents. For more details on
-using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that
-includes both content as well as the output of any embedded R code
-chunks within the document. You can embed an R code chunk like this:
-
 ``` r
-summary(cars)
+data = readRDS("wk2_stocks.rds")
+cumu_returns = sum(data$SPY_returns)
+# cumu_returns = 2.1833
+avg_returns = mean(data$SPY_returns)
+#avg_returns = 0.00037656
+sd_returns = sd(data$SPY_returns)
+#sd_returns = 0.012219
 ```
 
-    ##      speed           dist       
-    ##  Min.   : 4.0   Min.   :  2.00  
-    ##  1st Qu.:12.0   1st Qu.: 26.00  
-    ##  Median :15.0   Median : 36.00  
-    ##  Mean   :15.4   Mean   : 42.98  
-    ##  3rd Qu.:19.0   3rd Qu.: 56.00  
-    ##  Max.   :25.0   Max.   :120.00
+``` r
+library(ggplot2)
 
-## Including Plots
+ggplot(data, aes(x = date, y = SPY_prices)) +
+  geom_line()
+```
 
-You can also embed plots, for example:
+![](week2_lecture_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
-![](week2_lecture_files/figure-gfm/pressure-1.png)<!-- -->
+``` r
+library(dplyr)
+```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to
-prevent printing of the R code that generated the plot.
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+``` r
+library(lubridate)
+```
+
+    ## 
+    ## Attaching package: 'lubridate'
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     date, intersect, setdiff, union
+
+``` r
+yearly = data %>% 
+  mutate(year = year(date)) %>% 
+  group_by(year) %>% 
+  summarise(yearly_returns = sum(SPY_returns))
+
+ggplot(yearly, aes(x=year, y=yearly_returns)) +
+  geom_col()
+```
+
+![](week2_lecture_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->

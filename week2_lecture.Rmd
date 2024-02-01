@@ -14,22 +14,36 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+```{r}
+data = readRDS("wk2_stocks.rds")
+cumu_returns = sum(data$SPY_returns)
+# cumu_returns = 2.1833
+avg_returns = mean(data$SPY_returns)
+#avg_returns = 0.00037656
+sd_returns = sd(data$SPY_returns)
+#sd_returns = 0.012219
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
 ```
 
-## Including Plots
+```{r}
+library(ggplot2)
 
-You can also embed plots, for example:
+ggplot(data, aes(x = date, y = SPY_prices)) +
+  geom_line()
 
-```{r pressure, echo=FALSE}
-plot(pressure)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+
+library(dplyr)
+library(lubridate)
+
+yearly = data %>% 
+  mutate(year = year(date)) %>% 
+  group_by(year) %>% 
+  summarise(yearly_returns = sum(SPY_returns))
+
+ggplot(yearly, aes(x=year, y=yearly_returns)) +
+  geom_col()
+```

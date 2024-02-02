@@ -9,27 +9,16 @@ output:
     fig_height: 6
 
 ---
-
+## Statistics on S&P returns
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
-data = readRDS("data/wk2_stocks.rds")
-cumu_returns = sum(data$SPY_returns)*100
-# cumu_returns = 2.1833
-avg_returns = mean(data$SPY_returns)*100
-#avg_returns = 0.00037656
-sd_returns = sd(data$SPY_returns)*100
-#sd_returns = 0.012219
++ The cumulative returns of the S&P index during this period is `r round(cumu_returns,2)`%.
++ The average daily returns of the S&P index during this period is `r round(avg_returns,2)`%.
++ The standard deviation of the daily returns of the S&P index during this period is `r round(sd_returns,2)`%.
 
-```
-
-+ The cumulative returns of the S&P index during this period is `r cumu_returns`%.
-+ The average daily returns of the S&P index during this period is `r avg_returns`%.
-+ The standard deviation of the daily returns of the S&P index during this period is `r sd_returns`%.
-
-
+## S&P Prices
 ```{r}
 library(ggplot2)
 
@@ -38,7 +27,7 @@ ggplot(data, aes(x = date, y = SPY_prices)) +
 
 ```
 
-
+## S&P Yearly Returns
 ```{r}
 
 library(dplyr)
@@ -46,8 +35,9 @@ library(lubridate)
 
 yearly = data %>% 
   mutate(year = year(date)) %>% 
+  filter(year < 2024) %>% 
   group_by(year) %>% 
-  summarise(yearly_returns = sum(SPY_returns))
+  summarise(yearly_returns = sum(SPY_returns)*100)
 
 ggplot(yearly, aes(x=year, y=yearly_returns)) +
   geom_col()

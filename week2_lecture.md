@@ -2,22 +2,18 @@ week2
 ================
 2024-01-31
 
-``` r
-data = readRDS("data/wk2_stocks.rds")
-cumu_returns = sum(data$SPY_returns)*100
-# cumu_returns = 2.1833
-avg_returns = mean(data$SPY_returns)*100
-#avg_returns = 0.00037656
-sd_returns = sd(data$SPY_returns)*100
-#sd_returns = 0.012219
-```
+- [Statistics on S&P returns](#statistics-on-sp-returns)
+- [S&P Prices](#sp-prices)
+- [S&P Yearly Returns](#sp-yearly-returns)
 
-- The cumulative returns of the S&P index during this period is
-  218.3303882%.
-- The average daily returns of the S&P index during this period is
-  0.0376562%.
+## Statistics on S&P returns
+
+- The cumulative returns of the S&P index during this period is 2.18%.
+- The average daily returns of the S&P index during this period is 0%.
 - The standard deviation of the daily returns of the S&P index during
-  this period is 1.2219427%.
+  this period is 0.01%.
+
+## S&P Prices
 
 ``` r
 library(ggplot2)
@@ -26,7 +22,9 @@ ggplot(data, aes(x = date, y = SPY_prices)) +
   geom_line()
 ```
 
-![](week2_lecture_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](week2_lecture_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+
+## S&P Yearly Returns
 
 ``` r
 library(dplyr)
@@ -57,11 +55,12 @@ library(lubridate)
 ``` r
 yearly = data %>% 
   mutate(year = year(date)) %>% 
+  filter(year < 2024) %>% 
   group_by(year) %>% 
-  summarise(yearly_returns = sum(SPY_returns))
+  summarise(yearly_returns = sum(SPY_returns)*100)
 
 ggplot(yearly, aes(x=year, y=yearly_returns)) +
   geom_col()
 ```
 
-![](week2_lecture_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](week2_lecture_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->

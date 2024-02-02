@@ -15,15 +15,20 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-data = readRDS("wk2_stocks.rds")
-cumu_returns = sum(data$SPY_returns)
+data = readRDS("data/wk2_stocks.rds")
+cumu_returns = sum(data$SPY_returns)*100
 # cumu_returns = 2.1833
-avg_returns = mean(data$SPY_returns)
+avg_returns = mean(data$SPY_returns)*100
 #avg_returns = 0.00037656
-sd_returns = sd(data$SPY_returns)
+sd_returns = sd(data$SPY_returns)*100
 #sd_returns = 0.012219
 
 ```
+
++ The cumulative returns of the S&P index during this period is `r cumu_returns`%.
++ The average daily returns of the S&P index during this period is `r avg_returns`%.
++ The standard deviation of the daily returns of the S&P index during this period is `r sd_returns`%.
+
 
 ```{r}
 library(ggplot2)

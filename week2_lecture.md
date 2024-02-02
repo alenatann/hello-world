@@ -3,14 +3,21 @@ week2
 2024-01-31
 
 ``` r
-data = readRDS("wk2_stocks.rds")
-cumu_returns = sum(data$SPY_returns)
+data = readRDS("data/wk2_stocks.rds")
+cumu_returns = sum(data$SPY_returns)*100
 # cumu_returns = 2.1833
-avg_returns = mean(data$SPY_returns)
+avg_returns = mean(data$SPY_returns)*100
 #avg_returns = 0.00037656
-sd_returns = sd(data$SPY_returns)
+sd_returns = sd(data$SPY_returns)*100
 #sd_returns = 0.012219
 ```
+
+- The cumulative returns of the S&P index during this period is
+  218.3303882%.
+- The average daily returns of the S&P index during this period is
+  0.0376562%.
+- The standard deviation of the daily returns of the S&P index during
+  this period is 1.2219427%.
 
 ``` r
 library(ggplot2)

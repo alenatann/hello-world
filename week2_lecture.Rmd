@@ -37,7 +37,6 @@ ggplot(data, aes(x = date, y = SPY_prices)) +
 
 ## S&P Yearly Returns
 ```{r message = FALSE}
-
 library(dplyr)
 library(lubridate)
 
